@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  nexus-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    container_name: nexus
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # This volume persists the entire data directory, including config.json
+      # The data will be stored in a Docker-managed volume called 'nexus_data'
+      - nexus_data:/app/server/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/config"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+# Define the named volume
+volumes:
+  nexus_data:

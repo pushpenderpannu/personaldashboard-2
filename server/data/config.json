@@ -1,0 +1,8 @@
+{
+  "widgets": {
+    "weather": { "location": "Faridabad", "prompt": "Provide a friendly, concise weather summary based on this data: {data}" },
+    "stocks": { "symbols": ["RELIANCE.NS", "TCS.NS"], "alertPrompt": "Alert me if this stock moves more than 2%. Data: {data}" },
+    "news": { "topic": "technology", "prompt": "Summarize these articles into 5 crisp bullet points for a tech executive: {articles}" },
+    "twitter": { "accounts": ["@google", "@tesla"] }
+  }
+}
