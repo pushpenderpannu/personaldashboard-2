@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Widget from '../Widget';
 import { Typography, Box, CircularProgress, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 const StocksWidget = () => {
@@ -34,7 +33,7 @@ const StocksWidget = () => {
   };
 
   return (
-    <Widget title="Stocks">
+    <>
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
       {data.length > 0 && (
@@ -63,7 +62,7 @@ const StocksWidget = () => {
           </TableBody>
         </Table>
       )}
-    </Widget>
+    </>
   );
 };
 

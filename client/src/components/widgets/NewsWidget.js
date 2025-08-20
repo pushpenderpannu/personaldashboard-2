@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Widget from '../Widget';
 import { Typography, Box, CircularProgress, Link } from '@mui/material';
 
 const NewsWidget = () => {
@@ -28,7 +27,7 @@ const NewsWidget = () => {
   }, []);
 
   return (
-    <Widget title={`News: ${data ? data.topic : ''}`}>
+    <>
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
       {data && (
@@ -49,7 +48,7 @@ const NewsWidget = () => {
           </Box>
         </Box>
       )}
-    </Widget>
+    </>
   );
 };
 

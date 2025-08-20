@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Widget from '../Widget';
 import { Typography, Box, CircularProgress } from '@mui/material';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
@@ -38,7 +37,7 @@ const CalendarWidget = () => {
   }, []);
 
   return (
-    <Widget title="Calendar">
+    <>
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
       {!loading && !error && (
@@ -52,7 +51,7 @@ const CalendarWidget = () => {
           />
         </Box>
       )}
-    </Widget>
+    </>
   );
 };
 

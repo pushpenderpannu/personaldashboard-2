@@ -32,6 +32,7 @@ const Dashboard = ({ layout, onLayoutChange, onRemoveWidget }) => {
       rowHeight={20}
       onLayoutChange={onLayoutChange}
       draggableHandle=".MuiCardHeader-root"
+      preventCollision={true}
     >
       {layout.map((item) => {
         const widgetInfo = widgetComponents[item.i];

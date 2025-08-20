@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Widget from '../Widget';
 import { Typography, Box, CircularProgress, List, ListItem, ListItemText, Checkbox, IconButton, TextField, Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -61,7 +60,7 @@ const TaskListWidget = () => {
   };
 
   return (
-    <Widget title="Task List">
+    <>
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
       <Box>
@@ -100,7 +99,7 @@ const TaskListWidget = () => {
             <Button onClick={handleAddTask} sx={{ ml: 1 }}><AddIcon /></Button>
         </Box>
       </Box>
-    </Widget>
+    </>
   );
 };
 

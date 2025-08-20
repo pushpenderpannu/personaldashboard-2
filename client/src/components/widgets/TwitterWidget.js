@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Widget from '../Widget';
 import { Typography, Box, CircularProgress, List, ListItem, ListItemText, Divider } from '@mui/material';
 
 const TwitterWidget = () => {
@@ -28,7 +27,7 @@ const TwitterWidget = () => {
   }, []);
 
   return (
-    <Widget title="Twitter Feed">
+    <>
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
       {data.length > 0 && (
@@ -50,7 +49,7 @@ const TwitterWidget = () => {
           ))}
         </List>
       )}
-    </Widget>
+    </>
   );
 };
 

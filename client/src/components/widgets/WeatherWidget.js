@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Widget from '../Widget';
 import { Typography, Box, CircularProgress } from '@mui/material';
 
 const WeatherWidget = () => {
@@ -28,7 +27,7 @@ const WeatherWidget = () => {
   }, []);
 
   return (
-    <Widget title="Weather">
+    <>
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
       {data && (
@@ -41,7 +40,7 @@ const WeatherWidget = () => {
           </Typography>
         </Box>
       )}
-    </Widget>
+    </>
   );
 };
 
