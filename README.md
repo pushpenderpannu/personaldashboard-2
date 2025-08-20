@@ -40,11 +40,13 @@ The application requires an API key for Google Gemini.
 
 - Create a file named `.env` in the root of the project directory.
 - Copy the contents of `.env.example` into your new `.env` file.
-- Add your Google Gemini API key to the `.env` file:
+- Add your Google Gemini API key to the `.env` file.
+- **Important**: If you get an error message in the logs about a model not being found, you may need to specify a different model name. You can do this by setting the `GEMINI_MODEL_NAME` variable. Find available models for your key in Google AI Studio.
 
 ```env
 # .env
 GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+GEMINI_MODEL_NAME=gemini-1.5-flash-latest # Or another model available to you
 ```
 
 ### 3. Run with Docker Compose

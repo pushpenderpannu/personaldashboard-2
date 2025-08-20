@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Typography, Box, CircularProgress } from '@mui/material';
+import { Typography, CircularProgress } from '@mui/material';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 
@@ -20,7 +20,7 @@ const CalendarWidget = () => {
           id: task.id,
           title: task.title,
           start: new Date(task.date),
-          end: new Date(task.date), // For simplicity, tasks are single-day events
+          end: new Date(task.date),
           allDay: true,
         }));
         setEvents(formattedEvents);
@@ -33,7 +33,6 @@ const CalendarWidget = () => {
       }
     };
     fetchTasks();
-    // Potentially refetch on an interval or via a websocket
   }, []);
 
   return (
@@ -41,15 +40,14 @@ const CalendarWidget = () => {
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
       {!loading && !error && (
-        <Box sx={{ height: 'calc(100% - 16px)' }}> {/* Adjust height to fit within widget card */}
-          <Calendar
-            localizer={localizer}
-            events={events}
-            startAccessor="start"
-            endAccessor="end"
-            style={{ height: '100%' }}
-          />
-        </Box>
+        // The CardContent in the base Widget provides the necessary padding and scrolling
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 500 }} // A fixed height is often better for calendar
+        />
       )}
     </>
   );

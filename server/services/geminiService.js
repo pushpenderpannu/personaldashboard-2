@@ -16,7 +16,8 @@ async function generateWithGemini(prompt, contextData) {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+    const modelName = process.env.GEMINI_MODEL_NAME || 'gemini-1.5-flash-latest';
+    const model = genAI.getGenerativeModel({ model: modelName });
 
     // Replace placeholders like {data} or {articles} in the prompt
     const finalPrompt = prompt.replace(/{(\w+)}/g, (match, key) => {
