@@ -135,7 +135,14 @@ app.get('/api/weather', async (req, res) => {
         // MOCK API CALL
         const weatherData = { temperature: '15°C', condition: 'Sunny', city: location };
 
-        const insight = await generateWithGemini(prompt, { data: weatherData });
+        const context = {
+          data: weatherData,
+          location: weatherData.city,
+          city: weatherData.city,
+          temperature: weatherData.temperature,
+          condition: weatherData.condition,
+        };
+        const insight = await generateWithGemini(prompt, context);
         res.json({ ...weatherData, insight });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching weather data' });
@@ -158,7 +165,14 @@ app.get('/api/stocks', async (req, res) => {
         // Mock notification generation
         stocksData.forEach(async stock => {
             if (Math.abs(parseFloat(stock.changePercent)) > 2.0) {
-                const alertText = await generateWithGemini(alertPrompt, { data: stock });
+                const context = {
+                    data: stock,
+                    symbol: stock.symbol,
+                    price: stock.price,
+                    change: stock.change,
+                    changePercent: stock.changePercent,
+                };
+                const alertText = await generateWithGemini(alertPrompt, context);
                 notifications.push({ id: Date.now(), text: alertText, date: new Date().toISOString() });
             }
         });

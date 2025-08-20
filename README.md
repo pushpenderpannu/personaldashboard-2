@@ -83,6 +83,32 @@ This configuration is now stored directly in the `server/data/config.json` file 
 
 If you want to reset your configuration, you can delete the `server/data/config.json` file. The application will generate a new default one the next time it starts.
 
+### Customizing AI Prompts
+You can customize the prompts used to generate AI insights for certain widgets. Use the placeholders below to inject dynamic data into your prompts via the Settings panel.
+
+**Weather Widget**
+-   `{data}`: The full JSON object of weather data.
+-   `{location}` or `{city}`: The name of the city.
+-   `{temperature}`: The current temperature (e.g., "15°C").
+-   `{condition}`: The current weather condition (e.g., "Sunny").
+
+*Example Prompt:* `Is it a good day for a walk in {city}? The temperature is {temperature}.`
+
+**Stocks Widget**
+*Note: This prompt is used for generating alerts.*
+-   `{data}`: The full JSON object for the stock that triggered the alert.
+-   `{symbol}`: The stock ticker symbol (e.g., "AAPL").
+-   `{price}`: The current price.
+-   `{change}`: The change in price.
+-   `{changePercent}`: The percentage change.
+
+*Example Prompt:* `Alert! {symbol} has moved by {changePercent}% to ${price}.`
+
+**News Widget**
+-   `{articles}`: A JSON array of article objects, each with a `title` and `source`.
+
+*Example Prompt:* `Please summarize the main points from these articles for a busy CEO: {articles}`
+
 ### Updating the Application
 
 To update to the latest version of the application:
