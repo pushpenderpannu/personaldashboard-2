@@ -11,12 +11,14 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
  */
 async function generateWithGemini(prompt, contextData) {
   if (!process.env.GEMINI_API_KEY) {
-    console.warn('GEMINI_API_KEY not found. Returning mock data.');
+    console.warn('[GEMINI_SERVICE] GEMINI_API_KEY not found. Returning mock data.');
     return 'Mock AI Response: Gemini API key is not configured. This is a placeholder response.';
   }
 
+  const modelName = process.env.GEMINI_MODEL_NAME || 'gemini-1.5-flash-latest';
+  console.log(`[GEMINI_SERVICE] Using model: ${modelName}`);
+
   try {
-    const modelName = process.env.GEMINI_MODEL_NAME || 'gemini-1.5-flash-latest';
     const model = genAI.getGenerativeModel({ model: modelName });
 
     // Replace placeholders like {data} or {articles} in the prompt
@@ -28,11 +30,16 @@ async function generateWithGemini(prompt, contextData) {
       return value;
     });
 
+    console.log(`[GEMINI_SERVICE] Sending prompt:\n---\n${finalPrompt}\n---`);
+
     const result = await model.generateContent(finalPrompt);
     const response = await result.response;
-    return response.text();
+    const text = response.text();
+
+    console.log(`[GEMINI_SERVICE] Received response.`);
+    return text;
   } catch (error) {
-    console.error('Error with Gemini API:', error);
+    console.error('[GEMINI_SERVICE] Error with Gemini API:', error);
     // Return a more user-friendly error or a fallback
     return 'Error: Could not generate AI content.';
   }

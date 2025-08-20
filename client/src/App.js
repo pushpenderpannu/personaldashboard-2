@@ -11,14 +11,13 @@ import axios from 'axios';
 // Set axios base URL
 axios.defaults.baseURL = 'http://localhost:3001';
 
-// Note: resizeHandles has been removed to restore freeform resizing.
 const initialLayout = [
-  { i: 'weather', x: 0, y: 0, w: 21, h: 7 },
-  { i: 'stocks', x: 21, y: 0, w: 42, h: 14 },
-  { i: 'news', x: 0, y: 7, w: 21, h: 7 },
-  { i: 'twitter', x: 63, y: 0, w: 21, h: 28 },
-  { i: 'taskList', x: 0, y: 14, w: 42, h: 14 },
-  { i: 'calendar', x: 42, y: 14, w: 42, h: 14 },
+  { i: 'weather', x: 0, y: 0, w: 21, h: 7, resizeHandles: ['s'] },
+  { i: 'stocks', x: 21, y: 0, w: 42, h: 14, resizeHandles: ['s'] },
+  { i: 'news', x: 0, y: 7, w: 21, h: 7, resizeHandles: ['s'] },
+  { i: 'twitter', x: 63, y: 0, w: 21, h: 28, resizeHandles: ['s'] },
+  { i: 'taskList', x: 0, y: 14, w: 42, h: 14, resizeHandles: ['s'] },
+  { i: 'calendar', x: 42, y: 14, w: 42, h: 14, resizeHandles: ['s'] },
 ];
 
 const widgetDefaultDimensions = {
@@ -59,14 +58,20 @@ function App() {
   };
 
   const handleLayoutChange = (newLayout) => {
-    // Persist layout to localStorage
-    if (newLayout.length > 0) {
-      localStorage.setItem('dashboardLayout', JSON.stringify(newLayout));
+    // RGL doesn't persist `resizeHandles`, so we merge it back in.
+    const mergedLayout = newLayout.map(item => {
+      const originalItem = layout.find(l => l.i === item.i);
+      return { ...item, resizeHandles: originalItem ? originalItem.resizeHandles : ['s'] };
+    });
+
+    if (mergedLayout.length > 0) {
+      localStorage.setItem('dashboardLayout', JSON.stringify(mergedLayout));
+      setLayout(mergedLayout);
     } else if (layout.length > 0) {
-      // Handle case where all widgets are removed
-      localStorage.setItem('dashboardLayout', JSON.stringify([]));
+        // Handle case where all widgets are removed
+        localStorage.setItem('dashboardLayout', JSON.stringify([]));
+        setLayout([]);
     }
-    setLayout(newLayout);
   };
 
   const handleAddWidget = (widgetId) => {
@@ -75,14 +80,15 @@ function App() {
       x: 0,
       y: Infinity, // Puts it at the bottom
       ...widgetDefaultDimensions[widgetId],
+      resizeHandles: ['s'], // Ensure new widgets also have restricted resizing
     };
     const newLayout = [...layout, newWidget];
-    setLayout(newLayout); // Let layoutChange handler save it
+    setLayout(newLayout);
   };
 
   const handleRemoveWidget = (widgetId) => {
     const newLayout = layout.filter(w => w.i !== widgetId);
-    setLayout(newLayout); // Let layoutChange handler save it
+    setLayout(newLayout);
   };
 
   const handleSettingsOpen = () => setSettingsOpen(true);

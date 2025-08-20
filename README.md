@@ -79,13 +79,9 @@ docker-compose up -d
 
 The configuration for widgets (e.g., stock symbols, news topics, AI prompts) is managed through the application's UI via the **Settings** (gear) icon.
 
-This configuration is stored in a Docker volume and persists automatically. You do not need to manually edit any files to configure the widgets. If you ever need to reset the configuration to its default state, you can stop the container, remove the Docker volume, and restart it:
+This configuration is now stored directly in the `server/data/config.json` file on your host machine. The Docker container directly reads from and writes to this file. While using the UI is recommended, you can also view or edit this file directly.
 
-```bash
-docker-compose down
-docker volume rm nexus-dashboard_nexus_data
-docker-compose up -d
-```
+If you want to reset your configuration, you can delete the `server/data/config.json` file. The application will generate a new default one the next time it starts.
 
 ### Updating the Application
 

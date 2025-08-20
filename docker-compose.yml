@@ -12,16 +12,12 @@ services:
     env_file:
       - .env
     volumes:
-      # This volume persists the entire data directory, including config.json
-      # The data will be stored in a Docker-managed volume called 'nexus_data'
-      - nexus_data:/app/server/data
+      # This uses a bind mount to map the local ./server/data directory
+      # to the container. This makes config.json directly accessible on the host.
+      - ./server/data:/app/server/data
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3001/api/config"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 30s
-
-# Define the named volume
-volumes:
-  nexus_data:
