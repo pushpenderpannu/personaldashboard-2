@@ -2,17 +2,17 @@ import React from 'react';
 import { Card, CardHeader, CardContent, IconButton } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-const Widget = ({ title, children, onSettingsClick }) => {
+import CloseIcon from '@mui/icons-material/Close';
+
+const Widget = ({ title, children, onRemove }) => {
   return (
     <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <CardHeader
         title={title}
         action={
-          onSettingsClick && (
-            <IconButton onClick={onSettingsClick}>
-              <SettingsIcon />
-            </IconButton>
-          )
+          <IconButton onClick={onRemove} size="small">
+            <CloseIcon />
+          </IconButton>
         }
         sx={{
           backgroundColor: 'primary.main',
